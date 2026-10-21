@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Bookstore</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .book-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .book-card { border: 1px solid #ccc; padding: 15px; width: 200px; border-radius: 5px; }
+        .label { font-weight: bold; }
+        .available { color: green; }
+        .out-of-stock { color: red; }
+    </style>
+</head>
+<body>
+    <h1>📚 DevOps Automated Bookstore</h1>
+    <input type="text" id="searchInput" placeholder="Search by title or author..." onkeyup="searchBooks()">
+    
+    <h2>Books Available</h2>
+    <div class="book-container" id="books"></div>
+
+    <script>
+        const books = [
+            { title: "The Phoenix Project", author: "Gene Kim", cat: "DevOps", price: "\$29.99", status: "Available" },
+            { title: "Continuous Delivery", author: "Jez Humble", cat: "CI/CD", price: "\$39.99", status: "Available" },
+            { title: "Designing Data-Intensive Applications", author: "Martin Kleppmann", cat: "Architecture", price: "\$45.00", status: "Available" },
+            { title: "Site Reliability Engineering", author: "Betsy Beyer", cat: "SRE", price: "\$34.95", status: "Available" },
+            { title: "Clean Code", author: "Robert C. Martin", cat: "Development", price: "\$42.10", status: "Available" },
+            { title: "Kubernetes Up & Running", author: "Brendan Burns", cat: "Cloud", price: "\$36.00", status: "Available" }
+        ];
+
+        function renderBooks(data) {
+            const container = document.getElementById('books');
+            container.innerHTML = '';
+            data.forEach(b => {
+                container.innerHTML += `
+                    <div class="book-card">
+                        <h3>${b.title}</h3>
+                        <p><span class="label">Author:</span> ${b.author}</p>
+                        <p><span class="label">Category:</span> ${b.cat}</p>
+                        <p><span class="label">Price:</span> ${b.price}</p>
+                        <p class="${b.status === 'Available' ? 'available' : 'out-of-stock'}">${b.status}</p>
+                    </div>`;
+            });
+        }
+        
+        function searchBooks() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = books.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+            renderBooks(filtered);
+        }
+
+        renderBooks(books);
+    </script>
+    <!-- FEATURE_FLAG_PLACEHOLDER -->
+</body>
+</html>
